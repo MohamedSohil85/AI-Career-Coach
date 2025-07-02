@@ -1,0 +1,40 @@
+[Your Name]
+[Your Address]
+[Your Email] | [Phone Number] | [LinkedIn] | [GitHub]
+
+[Hiring Manager’s Name]
+[Company Name]
+[Company Address]
+[Date]
+
+Subject:
+Application for the Position of [Job Title]
+
+Dear [Hiring Manager's Name],
+
+I hope this message finds you well. I’m reaching out to express my strong interest in the [Job Title] role at [Company Name], a position that perfectly aligns with both my professional background and personal aspirations. With a proven track record in [your field or industry] and a genuine passion for [key skill or value the company champions], I’m excited by the opportunity to contribute to your team’s continued success.
+
+In my previous role at [Previous Company], I was responsible for [notable achievement or responsibility], a challenge that sharpened my expertise in [relevant skill or technology] and strengthened my ability to [key soft skill or result]. It was a defining experience that I believe mirrors the innovative and purpose-driven culture at [Company Name]—a company I’ve long admired for [specific praise or insight about the company, such as a recent project, mission, or value].
+
+What sets me apart is my combination of [skill 1], [skill 2], and [skill 3], all supported by a mindset geared toward [e.g., collaboration, continuous learning, creative problem-solving]. These strengths position me well to make an immediate and meaningful impact in your team.
+
+I would welcome the opportunity to further discuss how my experience and perspective could support [Company Name]’s goals. Please feel free to contact me at [Phone Number] or via email at [Email] to arrange a conversation at your convenience.
+
+Thank you for considering my application. I look forward to the possibility of contributing to your inspiring mission.
+
+Warm regards,
+[Your Name]
+
+//
+please the Cover letter must be :
+
+
+→ Clearly and professionally written
+
+→ Grammatically correct
+
+→ Technically precise without being overloaded
+
+→ Focus on the value added for the company
+
+→ Uses active language and highlights specific achievements
