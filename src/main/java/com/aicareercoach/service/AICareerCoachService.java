@@ -197,4 +197,92 @@ public class AICareerCoachService {
         return chain.execute(userPrompt);
     }
 
+    public String generateAIInterviewQuestions(MultipartFile resume,String jobDescription,String role) throws IOException {
+
+        PDDocument doc = PDDocument.load(resume.getInputStream());
+        PDFTextStripper stripper = new PDFTextStripper();
+        String text = stripper.getText(doc);
+        doc.close();
+
+        // Text in ein Document-Objekt konvertieren
+        //  Document doc = new Document(text); //
+
+        // 1. EmbeddingStore + EmbeddingModel
+        EmbeddingModel embeddingModel=  new AllMiniLmL6V2EmbeddingModel();
+        EmbeddingStore<TextSegment> embeddingStore = new InMemoryEmbeddingStore<>();
+
+// 2. Ingestor with Text-Dokument
+        EmbeddingStoreIngestor ingestor = EmbeddingStoreIngestor.builder()
+                .documentSplitter(DocumentSplitters.recursive(300, 50))
+                .embeddingModel(embeddingModel)
+                .embeddingStore(embeddingStore)
+                .build();
+
+        ingestor.ingest(Document.from(text));
+
+        List<String> readFileContent_1 = Files.readAllLines(Paths.get("C:\\Users\\momi_\\IdeaProjects\\OllamaProject\\src\\main\\resources\\instruction.txt"));
+        List<String> content = new ArrayList<>(readFileContent_1);
+
+        String instruction = String.join("\n", content);
+
+        List<String> readFileContent_2 = Files.readAllLines(Paths.get("C:\\Users\\momi_\\IdeaProjects\\OllamaProject\\src\\main\\resources\\response.txt"));
+        List<String> content_2 = new ArrayList<>(readFileContent_2);
+
+        String response = String.join("\n", content_2);
+
+        //
+        // Chat-Setup
+        ChatMemory chatMemory = MessageWindowChatMemory.builder()
+                .maxMessages(20)
+                .build();
+        String systemPrompt = String.format(
+                """
+                        You are an AI Career Coach. follow the Instructions in the provided file: %s.
+                        Job Description: %s
+                        Role: %s
+                        Here is the candidate's resume: %s
+                        and By Generation the Question ,Follow the Template in the provided file: %s
+                        Do not make up or invent any information. Use only what's provided.""",
+                instruction,jobDescription,role ,text,response
+        );
+
+        chatMemory.add(new SystemMessage(systemPrompt));
+
+        ContentRetriever contentRetriever = EmbeddingStoreContentRetriever.builder()
+                .embeddingStore(embeddingStore)
+                .embeddingModel(embeddingModel)
+                .maxResults(3)
+                .minScore(0.75)//
+                .build();
+
+
+// Create a RetrievalAugmentor using your ContentRetriever
+        RetrievalAugmentor retrievalAugmentor = DefaultRetrievalAugmentor.builder()
+                .contentRetriever(contentRetriever)
+                .build();
+
+        ConversationalRetrievalChain chain = ConversationalRetrievalChain.builder()
+                .chatLanguageModel(languageModel)
+                .chatMemory(chatMemory)
+                .retrievalAugmentor(retrievalAugmentor) // Use retrievalAugmentor instead of retriever
+                .build();
+
+
+
+        String userPrompt = String.format(
+                """
+                        Please analyze the job description for the role of %s and the candidate's resume.
+                        Based on the instructions in the file: %s and using the question generation template in the file: %s,
+                        generate interview questions tailored specifically to this candidate and this role.
+                        Ensure that all questions are relevant to the job and grounded in the candidate's actual experience and skills.
+                        Do not include any information not present in the provided documents.
+                        Please present the questions in the format specified in the template.
+                        """,
+                role, instruction, response
+        );
+
+        return chain.execute(userPrompt);
+
+    }
+
 }

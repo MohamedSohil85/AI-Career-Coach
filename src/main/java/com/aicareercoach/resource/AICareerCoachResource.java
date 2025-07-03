@@ -31,4 +31,8 @@ public class AICareerCoachResource {
     public ResponseEntity<String> generateCoverLetter(@RequestParam("resume") MultipartFile resume,@RequestParam("role") String role,@RequestParam("jobDescription") String jobDescription,@RequestParam("companyName") String companyName,@RequestParam("place") String place) throws IOException {
         return new ResponseEntity<>(aicareerCoachService.generateCoverLetter(resume, role, jobDescription, companyName, place),HttpStatus.OK);
     }
+    @PostMapping(value = "/generateQuestion")
+    public ResponseEntity<String>generateQuestion(@RequestParam("resume")MultipartFile resume,@RequestParam("jobDescription")String jobDescription,@RequestParam("role")String role) throws IOException {
+        return new ResponseEntity<>(aicareerCoachService.generateAIInterviewQuestions(resume, jobDescription, role),HttpStatus.OK);
+    }
 }

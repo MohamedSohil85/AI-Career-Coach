@@ -1,0 +1,15 @@
+"response": 
+"Based on the provided Job Description and Resume, here are the interview questions for
+{candidate_name}:",
+"",
+"**Fundamental Understanding Questions:**",
+
+add here the Questions
+
+"**Deeper Knowledge and Experience Questions:**",
+
+add here the Questions
+
+"**Resume Specific Questions:**",
+
+add here the Questions
