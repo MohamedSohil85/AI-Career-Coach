@@ -35,4 +35,8 @@ public class AICareerCoachResource {
     public ResponseEntity<String>generateQuestion(@RequestParam("resume")MultipartFile resume,@RequestParam("jobDescription")String jobDescription,@RequestParam("role")String role) throws IOException {
         return new ResponseEntity<>(aicareerCoachService.generateAIInterviewQuestions(resume, jobDescription, role),HttpStatus.OK);
     }
+    @PostMapping(value = "/gapSkills")
+    public ResponseEntity<String>gapSkills(@RequestParam("resume")MultipartFile resume,@RequestParam("targetRole")String targetRole) throws IOException {
+        return new ResponseEntity<>(aicareerCoachService.gapSkills(resume, targetRole),HttpStatus.OK);
+    }
 }

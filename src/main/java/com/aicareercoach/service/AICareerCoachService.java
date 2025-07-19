@@ -285,4 +285,83 @@ public class AICareerCoachService {
 
     }
 
+
+
+    public String gapSkills(MultipartFile resume, String targetRole) throws IOException {
+
+        PDDocument doc = PDDocument.load(resume.getInputStream());
+        PDFTextStripper stripper = new PDFTextStripper();
+        String text = stripper.getText(doc);
+        doc.close();
+
+        // Text in ein Document-Objekt konvertieren
+        //  Document doc = new Document(text); //
+
+        // 1. EmbeddingStore + EmbeddingModel
+        EmbeddingModel embeddingModel = new AllMiniLmL6V2EmbeddingModel();
+        EmbeddingStore<TextSegment> embeddingStore = new InMemoryEmbeddingStore<>();
+
+// 2. Ingestor with Text-Dokument
+        EmbeddingStoreIngestor ingestor = EmbeddingStoreIngestor.builder()
+                .documentSplitter(DocumentSplitters.recursive(300, 0))
+                .embeddingModel(embeddingModel)
+                .embeddingStore(embeddingStore)
+                .build();
+
+        ingestor.ingest(Document.from(text));
+
+        List<String> readFileContent = Files.readAllLines(toPath("gap_skills.txt"));
+        List<String> content = new ArrayList<>(readFileContent);
+
+        String instruction = String.join("\n", content);
+
+        ChatMemory chatMemory = MessageWindowChatMemory.builder()
+                .maxMessages(20)
+                .build();
+        String systemPrompt = String.format(
+                """
+                        You are an AI Career Coach. follow the Instructions in the provided file: %s.
+                        Target Role: %s
+                        Here is the candidate's resume: %s
+                        Do not make up or invent any information. Use only what's provided.""",
+                instruction, targetRole, text
+        );
+
+        //
+        chatMemory.add(new SystemMessage(systemPrompt));
+
+        ContentRetriever contentRetriever = EmbeddingStoreContentRetriever.builder()
+                .embeddingStore(embeddingStore)
+                .embeddingModel(embeddingModel)
+                .maxResults(3)
+                .minScore(0.75)//
+                .build();
+
+
+// Create a RetrievalAugmentor using your ContentRetriever
+        RetrievalAugmentor retrievalAugmentor = DefaultRetrievalAugmentor.builder()
+                .contentRetriever(contentRetriever)
+                .build();
+
+        ConversationalRetrievalChain chain = ConversationalRetrievalChain.builder()
+                .chatLanguageModel(languageModel)
+                .chatMemory(chatMemory)
+                .retrievalAugmentor(retrievalAugmentor) // Use retrievalAugmentor instead of retriever
+                .build();
+
+        String userPrompt = String.format(
+                """
+                        You are an AI career advisor specialized in technical roles.
+                        Please analyze the resume of %s and compare it to the target role: %s.
+                        Identify the skill gaps between the candidate’s current skills and the required skills for the desired role.
+                        Based on this analysis .Only use information present in the resume and role description to determine skill gaps."""
+                , text, targetRole);
+
+        return chain.execute(userPrompt);
+
+
+    }
+
+
+
 }

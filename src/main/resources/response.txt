@@ -13,3 +13,8 @@ add here the Questions
 "**Resume Specific Questions:**",
 
 add here the Questions
+
+"** Coding Questions ,add the Coding Questions according to the Programming language in the Resume file of Candidate
+ Do not make up or invent any information. Use only what's provided in the Resume**"
+
+add here the 5 Questions

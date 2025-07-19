@@ -15,8 +15,16 @@ An AI-powered Career Coach application built with **Java**, **Spring Boot**, **P
     - Job Description
     - Resume Content
 
-- 🧭 **Career Advisor**  
-  Get AI-driven career insights and recommendations based on your resume and job goals.
+- 🧭 **Gap Skills Analyzer**
+  - Extract skills from resume
+  - Suggest:
+
+    🎯 Missing Skills
+
+    🧱 How to learn each (e.g., "Learn AWS via [AWS Skill Builder]")
+
+    📚 Link to resources (can be curated manually or auto-generated)
+
 
 - 🎤 **Mock Interview Simulator**  
   Practice interviews with AI-generated questions and evaluate answers based on the target job description and resume content.
