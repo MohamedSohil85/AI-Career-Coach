@@ -22,7 +22,10 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URISyntaxException;
+import java.net.URL;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.Duration;
 import java.util.*;
@@ -81,7 +84,7 @@ public class AICareerCoachService {
         PDDocument document = PDDocument.load(file);
         PDFTextStripper stripper = new PDFTextStripper();
 
-        List<String> readFileContent = Files.readAllLines(Paths.get("C:\\Users\\momi_\\IdeaProjects\\OllamaProject\\src\\main\\resources\\ATS_Friendly_Resume_Guide.txt"));
+        List<String> readFileContent = Files.readAllLines(toPath("ATS_Friendly_Resume_Guide.txt"));
         List<String> content = new ArrayList<>(readFileContent);
 
         String ats = String.join("\n", content);
@@ -138,14 +141,14 @@ public class AICareerCoachService {
 
 // 2. Ingestor mit Text-Dokument
         EmbeddingStoreIngestor ingestor = EmbeddingStoreIngestor.builder()
-                .documentSplitter(DocumentSplitters.recursive(300, 50))
+                .documentSplitter(DocumentSplitters.recursive(300, 100))
                 .embeddingModel(embeddingModel)
                 .embeddingStore(embeddingStore)
                 .build();
 
         ingestor.ingest(Document.from(text));// Nur EIN Document
 
-        List<String> readFileContent = Files.readAllLines(Paths.get("C:\\Users\\momi_\\IdeaProjects\\OllamaProject\\src\\main\\resources\\CLT.txt"));
+        List<String> readFileContent = Files.readAllLines(toPath("CLT.txt"));
         List<String> content = new ArrayList<>(readFileContent);
 
         String coverTemp = String.join("\n", content);
@@ -220,12 +223,12 @@ public class AICareerCoachService {
 
         ingestor.ingest(Document.from(text));
 
-        List<String> readFileContent_1 = Files.readAllLines(Paths.get("C:\\Users\\momi_\\IdeaProjects\\OllamaProject\\src\\main\\resources\\instruction.txt"));
+        List<String> readFileContent_1 = Files.readAllLines(toPath("instruction.txt"));
         List<String> content = new ArrayList<>(readFileContent_1);
 
         String instruction = String.join("\n", content);
 
-        List<String> readFileContent_2 = Files.readAllLines(Paths.get("C:\\Users\\momi_\\IdeaProjects\\OllamaProject\\src\\main\\resources\\response.txt"));
+        List<String> readFileContent_2 = Files.readAllLines(toPath("response.txt"));
         List<String> content_2 = new ArrayList<>(readFileContent_2);
 
         String response = String.join("\n", content_2);
@@ -303,7 +306,7 @@ public class AICareerCoachService {
 
 // 2. Ingestor with Text-Dokument
         EmbeddingStoreIngestor ingestor = EmbeddingStoreIngestor.builder()
-                .documentSplitter(DocumentSplitters.recursive(300, 0))
+                .documentSplitter(DocumentSplitters.recursive(300, 100))
                 .embeddingModel(embeddingModel)
                 .embeddingStore(embeddingStore)
                 .build();
@@ -362,6 +365,13 @@ public class AICareerCoachService {
 
     }
 
-
+    private static Path toPath(String fileName) {
+        try {
+            URL fileUrl = AICareerCoachService.class.getClassLoader().getResource(fileName);
+            return Paths.get(fileUrl.toURI());
+        } catch (URISyntaxException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
 }
