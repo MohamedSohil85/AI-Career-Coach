@@ -21,8 +21,11 @@ public class JobCandidate implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long candidateId;
+    private String lastName;
+    private String firstName;
+    private String candidateAddress;
     private String github;
-    private String searched;
+    private String role;
     private String phoneNumber;
     @JsonFormat(pattern = "dd/MM/yyyy")
     private LocalDate birthDate;

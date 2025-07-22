@@ -124,7 +124,7 @@ public class AICareerCoachService {
         return response != null ? response.trim(): "No answer from AI.";
     }
 
-    public String generateCoverLetter(MultipartFile resume, String role, String jobDescription, String companyName, String place) throws IOException {
+    public String generateCoverLetter(MultipartFile resume, String role, String jobDescription, String companyName, String place,String hr) throws IOException {
 
 
         PDDocument document = PDDocument.load(resume.getInputStream());
@@ -141,7 +141,7 @@ public class AICareerCoachService {
 
 // 2. Ingestor mit Text-Dokument
         EmbeddingStoreIngestor ingestor = EmbeddingStoreIngestor.builder()
-                .documentSplitter(DocumentSplitters.recursive(300, 100))
+                .documentSplitter(DocumentSplitters.recursive(300, 200))
                 .embeddingModel(embeddingModel)
                 .embeddingStore(embeddingStore)
                 .build();
@@ -162,10 +162,11 @@ public class AICareerCoachService {
                         "Job Description: %s\n" +
                         "Company Name: %s\n" +
                         "Location: %s\n\n" +
+                        "Hiring Manager’s Name: %s\n" +
                         "Please follow the structure and tone of the following cover letter template:\n%s\n\n" +
                         "Here is the candidate's resume:\n%s\n\n" +
                         "Do not make up or invent any information. Use only what's provided.",
-                role, jobDescription, companyName, place, coverTemp, text
+                role, jobDescription, companyName, place,hr, coverTemp, text
         );
 
         chatMemory.add(new SystemMessage(systemPrompt));
