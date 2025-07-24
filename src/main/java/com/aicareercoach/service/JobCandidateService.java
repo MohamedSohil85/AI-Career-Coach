@@ -132,8 +132,8 @@ private final AiServices aiServices;
                 "Always write acronyms in full at least once (e.g., 'Search Engine Optimization (SEO)')."};
 
         String fullPrompt = String.join("\n\n",
-                "You are an AI career coach and CV writer" +"Generate for"+jobCandidate_+" a professional CV according to criteria :"+ Arrays.toString(ats_tips)+" and follow  structure the resume exactly based on the following template/content:"+ats+"write the CV according to the skills of candidate"+jobCandidate_.getSoftSkills()+" work experiences , educations"+jobCandidate_.getWorkExperience()+" "+jobCandidate_.getLevelOfEducation()+
-                   " Language"+jobCandidate_.getLanguages()+"and Certifications"+jobCandidate_.getCertifications()+     " please Do not invent anything. If you don't know the answer, say so."
+                "You are an AI career coach and CV writer" +"Generate for"+jobCandidate_+" a professional CV exactly according to the  structure based on the following template/content:"+ats+"write the CV according to the skills of candidate"+jobCandidate_.getSoftSkills()+" his work experiences ,his educations"+jobCandidate_.getWorkExperience()+" "+jobCandidate_.getLevelOfEducation()+
+                   "his Language"+jobCandidate_.getLanguages()+"and Certifications"+jobCandidate_.getCertifications()+ "show also the following criteria "+ Arrays.toString(ats_tips) +"please Do not invent anything. If you don't know the answer, say so."
 
                 );
  /* Map<String, Object> req = new HashMap<>();
