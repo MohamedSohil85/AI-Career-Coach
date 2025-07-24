@@ -1,0 +1,22 @@
+
+
+
+🟦 Multiple Choice (5-7 Questions)
+- Shows code
+- Gives 4 labeled options
+- Marks correct answer (e.g., "expected_answer": "B")
+
+🟨 Fill in the Blank (5-7 Questions)
+- Shows code
+- Candidate writes the exact output
+- No options field
+
+🟥 True or False (5-7 Questions)
+- Shows code
+- Statement like: “This code will output ‘5 5’”
+- Answer: "true" or "false"
+
+---
+
+🔁 Quantity:
+Generate 5–7 questions per type, per skill/difficulty combo.

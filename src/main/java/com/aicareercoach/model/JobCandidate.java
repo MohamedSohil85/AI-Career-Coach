@@ -50,7 +50,7 @@ public class JobCandidate implements Serializable {
     private String softSkills;
     private String interests;
     private String location;
-    @OneToMany(targetEntity = Language.class, fetch = FetchType.EAGER,cascade = CascadeType.ALL)
+    @OneToMany(targetEntity = Certification.class, fetch = FetchType.EAGER,cascade = CascadeType.ALL)
     @JoinColumn(name = "candidateId",referencedColumnName = "candidateId")
-    private List<Certification> Certifications;
+    private List<Certification> certifications;
 }
