@@ -17,6 +17,7 @@ import dev.langchain4j.store.embedding.EmbeddingStoreIngestor;
 import dev.langchain4j.store.embedding.inmemory.InMemoryEmbeddingStore;
 
 import org.apache.pdfbox.text.PDFTextStripper;
+import org.springframework.ai.tool.annotation.Tool;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -79,6 +80,7 @@ public class AICareerCoachService {
             return "Failed to process file";
         }
     }
+
     private String askAICareerCoach(InputStream file) throws IOException {
 
         PDDocument document = PDDocument.load(file);

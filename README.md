@@ -36,6 +36,7 @@ An AI-powered Career Coach application built with **Java**, **Spring Boot**, **P
 - **Backend:** Java, Spring Boot
 - **AI & NLP:** LLaMA (via LangChain)
   -**LLM Interface:** LangChain + Custom Prompts
+- **Retrieval System:** RAG (Retrieval-Augmented Generation) using embeddings + vector search
 - **Database:** PostgreSQL
 - **Containerization:** Docker
 - **APIs:** RESTful services
